@@ -1,6 +1,6 @@
-#🔒 Security Policy
+# Security Policy 🔒 
 
-##📜 Proprietary License
+## Proprietary License 📜
 
 Copyright (c) 2024
 ✨ Hackatonziki 3000
