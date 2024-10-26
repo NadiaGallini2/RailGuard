@@ -1,89 +1,159 @@
-.streamlit-container {
-    background-color: #f0f0f0;
+/* Общий фон */
+.streamlit-container,
+body,
+.stApp {
+    background-color: #fafafa;
 }
 
+/* Основной контейнер */
 .st-emotion-cache-16txtl3 {
-    padding: 6rem 1.5rem;
-    background-color: #fff;
+    padding: 4rem 1.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Сайдбар */
+.stSidebar {
+    background-color: #f0f0f0 !important;
+    color: #ffffff !important;
 }
 
 .sidebar .sidebar-content {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0 !important;
+    border-right: 2px solid #d1d1d1;
 }
 
 .sidebar .sidebar-collapse-control {
-    color: #343434;
+    color: #ffffff !important;
 }
 
-body,
-.stApp {
-    background-color: #f0f0f0;
-}
-
+/* Шапка */
 .st-emotion-cache-1avcm0n {
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    height: 2.875rem;
-    background: #343434;
-    outline: none;
-    z-index: 999990;
-    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2.5rem;
+    background: #d51d29;
+    z-index: 9999;
 }
 
+/* Карточки и контейнеры */
 .st-emotion-cache-1erivf3 {
     display: flex;
-    -webkit-box-align: center;
     align-items: center;
     padding: 1rem;
-    background-color: #343434;
-    border-radius: 0.5rem;
-    color: rgb(250, 250, 250);
-}
-
-
-/* Стили для заголовков */
-
-h1,
-h2,
-h3 {
-    color: #343434;
-}
-
-
-/* Стили для текста */
-
-p,
-span {
-    color: #343434;
-}
-
-
-/* Стили для ссылок */
-
-a {
-    color: #343434;
-}
-
-
-/* Стили для кнопок */
-
-button {
-    background-color: #ffffff;
-    color: #254B8D;
-}
-
-button:hover {
     background-color: #f0f0f0;
+    border-radius: 0.5rem;
+    color: #ffffff;
 }
 
+/* Заголовки */
+h1, h2, h3 {
+    color: #d51d29;
+    font-family: 'Arial', sans-serif;
+}
 
-/* Стили для полей ввода */
+/* Текст */
+p, span {
+    color: #555;
+    font-size: 16px;
+}
 
+/* Ссылки */
+a {
+    color: #d51d29;
+    text-decoration: none;
+}
+a:hover {
+    color: #b81820;
+}
+
+/* Кнопки */
+button {
+    background-color: #d51d29;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+/* button:hover {
+    background-color: #b81820;
+} */
+
+/* Поля ввода */
 input[type="text"],
 input[type="number"],
 textarea {
     background-color: #ffffff;
-    color: #254B8D;
+    color: #666;
+    border: 1px solid #d1d1d1;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
 }
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+    border-color: #d51d29;
+    outline: none;
+    box-shadow: 0 0 5px rgba(213, 29, 41, 0.3);
+}
+
+/* Переключатели в сайдбаре */
+.sidebar input[type="checkbox"] + label,
+.sidebar input[type="radio"] + label {
+    color: #ffffff;
+    background-color: #d51d29;
+}
+
+.sidebar input[type="checkbox"]:checked + label,
+.sidebar input[type="radio"]:checked + label {
+    background-color: #d51d29;
+    color: #ffffff;
+}
+
+/* Прочие стили */
+.st-bd {
+    color: #666;
+}
+
+
+
+/* Стили для file uploader */
+/* Общий фон */
+.streamlit-container,
+body,
+.stApp {
+    background-color: #fafafa;
+}
+
+/* Стили для file uploader */
+.stFileUploader {
+    background-color: #ffffff; /* Фон для поля загрузки */
+    border: 1px solid #d1d1d1; /* Граница */
+    color: #333333; /* Темный цвет текста */
+}
+
+/* Стили для текста внутри file uploader */
+.stFileUploader p,
+.stFileUploader span {
+    color: #333333 !important; /* Принудительно установить цвет текста */
+}
+
+/* Стили для кнопки загрузки */
+.stFileUploader button {
+    background-color: #d51d29; /* Цвет фона кнопки */
+    color: #ffffff; /* Цвет текста на кнопке */
+    border: none; /* Без границы */
+    border-radius: 0.5rem; /* Скругленные углы */
+    padding: 0.5rem 1rem; /* Отступы */
+    font-weight: bold; /* Жирный шрифт */
+    cursor: pointer; /* Указатель курсора */
+    transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+}
+
+
