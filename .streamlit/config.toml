@@ -3,3 +3,4 @@ headless = true
 port = 8501
 enableXsrfProtection = false
 enableCORS = false
+maxMessageSize = 400000000  # Увеличиваем лимит (в байтах)

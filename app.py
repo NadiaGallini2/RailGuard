@@ -26,7 +26,7 @@ load_css(css_file)
 with st.sidebar:
     st.title("🚂 RailGuard")
     choice = st.radio("Навигация", ["Загрузка", "Анализ", "Машинное обучение", "Прогнозы", "Экспорт"])
-    st.info("🤖 Проект для анализа оттока организаций")
+    st.info("🤖 Проект для анализа оттока")
 
 # Приветствие пользователя
 st.markdown("<h1 style='color: #d51d29;'>Добро пожаловать в RailGuard! 🚆</h1>", unsafe_allow_html=True)
@@ -36,43 +36,70 @@ st.markdown("👋 Мы рады вас видеть! Здесь вы может�
 if os.path.exists('./dataset.csv'):
     df = pd.read_csv('dataset.csv', index_col=None)
 
-# Загрузка данных
 if choice == "Загрузка":
     st.title("📥 Загрузка данных")
-    file = st.file_uploader("Загрузите основной набор данных", type=["csv", "xlsx"])
-    additional_file = st.file_uploader("Загрузите дополнительные данные (необязательно)", type=["csv", "xlsx"])
-    
-    # Основной файл данных
-    if file is not None:
+    files = st.file_uploader("Загрузите набор данных (можно загрузить несколько файлов)", type=["csv", "xlsx", "xls"], accept_multiple_files=True)
+
+    # Функция для чтения файлов
+    def read_file(uploaded_file):
         try:
-            if file.name.endswith('.csv'):
-                df = pd.read_csv(file, sep=',', index_col=None)
-            elif file.name.endswith('.xlsx'):
-                df = pd.read_excel(file, index_col=None)
-            df.to_csv('dataset.csv', index=None)
-            st.dataframe(df)
+            if uploaded_file.name.endswith('.csv'):
+                return pd.read_csv(uploaded_file, sep=',', index_col=None)
+            else:
+                return pd.read_excel(uploaded_file, index_col=None)
         except pd.errors.EmptyDataError:
             st.error("🚨 Файл пустой")
         except Exception as e:
-            st.error(f"🚨 Произошла ошибка: {e}")
-    
-    # Загрузка дополнительных данных
-    if additional_file is not None:
-        try:
-            if additional_file.name.endswith('.csv'):
-                additional_df = pd.read_csv(additional_file, sep=',', index_col=None)
-            elif additional_file.name.endswith('.xlsx'):
-                additional_df = pd.read_excel(additional_file, index_col=None)
-            df = pd.merge(df, additional_df, how='left', on='Region')  # Объединяем по региону
-            df.to_csv('dataset.csv', index=None)
-            st.success("Дополнительные данные успешно загружены и объединены!")
-        except Exception as e:
-            st.error(f"🚨 Ошибка при загрузке дополнительных данных: {e}")
+            st.error(f"🚨 Произошла ошибка при загрузке {uploaded_file.name}: {e}")
+        return None
 
+    # Список для хранения загруженных датафреймов
+    dataframes = []
+
+    # Загрузка всех файлов
+    if files:
+        for file in files:
+            df = read_file(file)
+            if df is not None:
+                dataframes.append(df)
+                st.success(f"Файл {file.name} успешно загружен!")
+
+        # Объединение всех загруженных датафреймов по столбцу 'ID'
+        if dataframes:
+            try:
+                # Проверяем наличие столбца 'ID' в каждом датафрейме
+                if all('ID' in df.columns for df in dataframes):
+                    combined_df = dataframes[0]
+                    for additional_df in dataframes[1:]:
+                        combined_df = pd.merge(combined_df, additional_df, how='left', on='ID')
+                    
+                    # Сохраняем объединённый датафрейм в новый файл
+                    combined_file_name = 'combined_dataset.csv'
+                    combined_df.to_csv(combined_file_name, index=None)
+                    
+                    st.success("Все данные успешно объединены по 'ID' и сохранены в файл: combined_dataset.csv")
+
+                    # Кнопка для скачивания файла
+                    st.download_button(
+                        label="Скачать объединённый файл",
+                        data=combined_df.to_csv(index=False).encode('utf-8'),
+                        file_name='combined_dataset.csv',
+                        mime='text/csv'
+                    )
+
+                    # Сохраняем объединенный датафрейм в локальное состояние
+                    st.session_state.combined_df = combined_df
+                else:
+                    st.error("🚨 Один или несколько загруженных файлов не содержат столбца 'ID'.")
+
+            except Exception as e:
+                st.error(f"🚨 Ошибка при объединении данных: {e}")
+                
 # Анализ данных и отбор признаков
 if choice == "Анализ":
     st.title("🔍 Анализ данных и отбор признаков")
-    if 'df' in locals():
+    if 'combined_df' in st.session_state:
+        df = st.session_state.combined_df  # Получаем объединенный датафрейм из состояния
         st.markdown("### Важность признаков для оттока")
         st.write("Анализируется влияние каждого признака на целевую переменную для лучшего понимания.")
         profile = ProfileReport(df, minimal=True)
@@ -80,25 +107,58 @@ if choice == "Анализ":
     else:
         st.warning("⚠️ Сначала загрузите данные.")
 
-# Раздел для обучения модели
 if choice == "Машинное обучение":
     st.title("🤖 Обучение модели машинного обучения")
+    
+    # Убедитесь, что объединенный датафрейм доступен
+    if 'combined_df' in st.session_state:
+        df = st.session_state.combined_df
+    else:
+        st.error("🚨 Объединенный файл не загружен. Пожалуйста, загрузите данные.")
+        st.stop()
+    
+    # Выбор временного интервала для прогноза
     prediction_interval = st.selectbox("Выберите временной интервал для прогноза", ["1 месяц", "3 месяца", "6 месяцев", "1 год"])
+    
+    # Выбор целевых столбцов
     chosen_targets = st.multiselect('🎯 Выберите целевые столбцы', df.columns)
+
+    # Кнопка для запуска обучения
     if st.button('🚀 Запустить обучение'):
         for target in chosen_targets:
             st.subheader(f"🔍 Модель для целевого столбца: {target}")
+            
+            # Удаление строк с пропущенными значениями в целевом столбце
             df_target = df.dropna(subset=[target])
-            setup(df_target, target=target, verbose=False)
+            
+            # Определяем целевые переменные и фичи
+            X = df_target.drop(columns=[target, 'ID', 'ОКПО', 'причина_оттока'])  # Убедитесь, что эти столбцы есть в вашем объединенном файле
+            y = df_target[target]
+            
+            # Настройка модели
+            setup(X, target=y, verbose=False)
             setup_df = pull()
             st.info("🛠️ Параметры эксперимента ML")
             st.dataframe(setup_df.dropna())
+            
+            # Обучение модели
             best_model = compare_models()
             compare_df = pull()
             st.info("🏆 Лучшая модель")
             st.dataframe(compare_df.dropna())
+
+            # Сохранение модели
             save_model(best_model, f'best_model_{target}')
             st.success(f"Модель для {target} успешно сохранена!")
+
+            # Прогнозирование вероятности оттока
+            predictions = best_model.predict_proba(X)[:, 1]  # Получаем вероятности оттока
+            df_target['Вероятность оттока'] = predictions
+            
+            # Вывод результатов
+            results = df_target[['ID', 'ОКПО', 'причина_оттока', 'Вероятность оттока']]
+            st.subheader("Результаты прогноза оттока")
+            st.dataframe(results)
 
 # Прогнозирование оттока для различных регионов
 if choice == "Прогнозы":
