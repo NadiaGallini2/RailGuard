@@ -1,9 +1,11 @@
-# Security Policy
+#🔒 Security Policy
 
-Proprietary License
+##📜 Proprietary License
 
-Copyright (c) [2024] [Hackatonziki 3000]
+Copyright (c) 2024
+✨ Hackatonziki 3000
 
-All rights reserved.
+All rights reserved. 🚫
 
-You may not use, copy, modify, or distribute this software without permission from the author. For permissions, contact [gallini.nadi@yandex.ru].
+You may not use, copy, modify, or distribute this software without permission from the author. For permissions, please contact:
+📧 [gallini.nadi@yandex.ru].
