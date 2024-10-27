@@ -1,18 +1,23 @@
 /* Общий фон */
+
 .streamlit-container,
 body,
 .stApp {
-    background-color: #fafafa;
+    background-color: #6b5757;
 }
 
+
 /* Основной контейнер */
+
 .st-emotion-cache-16txtl3 {
     padding: 4rem 1.5rem;
-    background-color: #ffffff;
+    background-color: #bab3b3;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 /* Сайдбар */
+
 .stSidebar {
     background-color: #f0f0f0 !important;
     color: #ffffff !important;
@@ -27,7 +32,9 @@ body,
     color: #ffffff !important;
 }
 
+
 /* Шапка */
+
 .st-emotion-cache-1avcm0n {
     position: fixed;
     top: 0;
@@ -38,38 +45,52 @@ body,
     z-index: 9999;
 }
 
+
 /* Карточки и контейнеры */
+
 .st-emotion-cache-1erivf3 {
     display: flex;
     align-items: center;
     padding: 1rem;
     background-color: #f0f0f0;
     border-radius: 0.5rem;
-    color: #ffffff;
+    color: #695858;
 }
 
+
 /* Заголовки */
-h1, h2, h3 {
+
+h1,
+h2,
+h3 {
     color: #d51d29;
     font-family: 'Arial', sans-serif;
 }
 
+
 /* Текст */
-p, span {
+
+p,
+span {
     color: #555;
     font-size: 16px;
 }
 
+
 /* Ссылки */
+
 a {
     color: #d51d29;
     text-decoration: none;
 }
+
 a:hover {
     color: #b81820;
 }
 
+
 /* Кнопки */
+
 button {
     background-color: #d51d29;
     color: #ffffff;
@@ -80,11 +101,15 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+
 /* button:hover {
     background-color: #b81820;
 } */
 
+
 /* Поля ввода */
+
 input[type="text"],
 input[type="number"],
 textarea {
@@ -103,57 +128,143 @@ textarea:focus {
     box-shadow: 0 0 5px rgba(213, 29, 41, 0.3);
 }
 
+
 /* Переключатели в сайдбаре */
-.sidebar input[type="checkbox"] + label,
-.sidebar input[type="radio"] + label {
+
+.sidebar input[type="checkbox"]+label,
+.sidebar input[type="radio"]+label {
     color: #ffffff;
     background-color: #d51d29;
 }
 
-.sidebar input[type="checkbox"]:checked + label,
-.sidebar input[type="radio"]:checked + label {
+.sidebar input[type="checkbox"]:checked+label,
+.sidebar input[type="radio"]:checked+label {
     background-color: #d51d29;
     color: #ffffff;
 }
+
 
 /* Прочие стили */
+
 .st-bd {
     color: #666;
 }
 
 
-
 /* Стили для file uploader */
+
+
 /* Общий фон */
+
 .streamlit-container,
 body,
 .stApp {
     background-color: #fafafa;
 }
 
+
 /* Стили для file uploader */
+
 .stFileUploader {
-    background-color: #ffffff; /* Фон для поля загрузки */
-    border: 1px solid #d1d1d1; /* Граница */
-    color: #333333; /* Темный цвет текста */
+    background-color: #ffffff;
+    /* Фон для поля загрузки */
+    border: 1px solid #d1d1d1;
+    /* Граница */
+    color: #333333;
+    /* Темный цвет текста */
 }
+
 
 /* Стили для текста внутри file uploader */
+
 .stFileUploader p,
 .stFileUploader span {
-    color: #333333 !important; /* Принудительно установить цвет текста */
+    color: #333333 !important;
+    /* Принудительно установить цвет текста */
 }
+
 
 /* Стили для кнопки загрузки */
+
 .stFileUploader button {
-    background-color: #d51d29; /* Цвет фона кнопки */
-    color: #ffffff; /* Цвет текста на кнопке */
-    border: none; /* Без границы */
-    border-radius: 0.5rem; /* Скругленные углы */
-    padding: 0.5rem 1rem; /* Отступы */
-    font-weight: bold; /* Жирный шрифт */
-    cursor: pointer; /* Указатель курсора */
-    transition: background-color 0.3s ease; /* Плавный переход цвета фона */
+    background-color: #d51d29;
+    /* Цвет фона кнопки */
+    color: #ffffff;
+    /* Цвет текста на кнопке */
+    border: none;
+    /* Без границы */
+    border-radius: 0.5rem;
+    /* Скругленные углы */
+    padding: 0.5rem 1rem;
+    /* Отступы */
+    font-weight: bold;
+    /* Жирный шрифт */
+    cursor: pointer;
+    /* Указатель курсора */
+    transition: background-color 0.3s ease;
+    /* Плавный переход цвета фона */
 }
 
 
+/* Стили для таблиц */
+
+table {
+    color: #333333;
+    /* Цвет текста для таблиц */
+    background-color: #ffffff;
+    /* Фон таблицы */
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th,
+table td {
+    padding: 0.5rem;
+    /* Отступы */
+    border: 1px solid #d1d1d1;
+    /* Цвет границы */
+    text-align: left;
+    /* Выравнивание текста */
+}
+
+table th {
+    background-color: #f0f0f0;
+    /* Фон для заголовков */
+    color: #333333;
+    /* Цвет текста заголовков */
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Чередующийся фон для четных строк */
+}
+
+
+/* Стили для таблиц, созданных с помощью st.table и st.write */
+
+.stTable th,
+.stTable td {
+    color: #333333;
+    /* Тёмный цвет текста для таблиц */
+    background-color: #ffffff;
+    /* Фон таблицы */
+}
+
+.stTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.stTable th {
+    background-color: #f0f0f0;
+    /* Фон для заголовков */
+    font-weight: bold;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.stTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* Чередующийся фон для строк */
+}
